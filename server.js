@@ -1,15 +1,24 @@
-const http = require('http');
 const port = 8080;
-const fs = require('fs');
 
-const index = fs.readFileSync('index.html', 'utf-8');
-const data = fs.readFileSync('data.json', 'utf-8');
+const express = require('express');
+const server = express();
 
-const server = http.createServer((req,res)=>{
-    console.log(req.url);
-    console.log(`Server is live on port ${port}`);
-    res.setHeader('Content-Type', 'text/html');
-    res.end(index);
+
+server.get('/', (req, res) => {
+    res.json({type:'GET'});
+});
+server.post('/', (req, res)=>{
+    res.json({type:'POST'});
+});
+server.put('/',(req, res)=>{
+    res.json({type:'PUT'});
+});
+server.delete('/', (req, res)=>{
+    res.json({type:'DELETE'});
 });
 
-server.listen(port);
+
+
+server.listen(port, () => {
+    console.log(`Server is live on port ${port}...`)
+});
